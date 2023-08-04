@@ -1,0 +1,11 @@
+APP:
+  NAME: "simple-login"
+  PORT: 9000
+JWT:
+  SECRET: "simple-login"
+  ISSUER: "bosszanahub.dev"
+  DOMAIN: "bosszanahub.dev"
+  EXPIRATION_TIME: 3600
+  REFRESH_EXPIRATION_TIME: 86400
+DATABASE:
+  DSN: "host=localhost user=postgres password=postgres dbname=postgres port=5432 sslmode=disable TimeZone=Asia/Bangkok"
