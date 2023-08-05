@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"github.com/kz-login/app/models"
 	"github.com/kz-login/pkg/encrypt"
 	"github.com/kz-login/pkg/errors"
@@ -28,6 +29,13 @@ func (s *defaultService) Login(data *models.MemberLoginData) (*models.MemberData
 		Name:         user.Name,
 		MobileNumber: user.MobileNumber,
 	})
+
+	/* Store to redis */
+	key := fmt.Sprintf("auth#%d", user.Id)
+	sErr := s.rdc.Set(key, ac.AccessToken)
+	if err != nil {
+		return nil, nil, errors.NewError(errors.ErrCodeInternalServer, sErr.Error())
+	}
 
 	return user, &models.JwtToken{
 		AccessToken:         ac.AccessToken,

@@ -13,6 +13,7 @@ type defaultHandler struct {
 
 type ClientHandler interface {
 	MemberLogin(ctx *fiber.Ctx) error
+	MemberLogout(ctx *fiber.Ctx) error
 	MemberProfile(ctx *fiber.Ctx) error
 	RefreshToken(ctx *fiber.Ctx) error
 }

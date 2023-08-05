@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/kz-login/env"
+	"github.com/kz-login/pkg/csredis"
 	"github.com/kz-login/pkg/db"
 	"github.com/kz-login/pkg/jwt"
 	"github.com/kz-login/router"
@@ -23,13 +24,13 @@ func main() {
 		log.Fatalf("can't connect database: %v", err)
 	}
 	/* Setup Redis */
-	//rdc := csredis.NewClient(&csredis.Option{
-	//	Addr:        CFG.Redis.Address,
-	//	Password:    CFG.Redis.Password,
-	//	DB:          CFG.Redis.DB,
-	//	RedisExpire: CFG.Redis.Expire,
-	//	Timeout:     CFG.Redis.Timeout,
-	//})
+	rdc := csredis.NewClient(&csredis.Option{
+		Addr:        CFG.Redis.Address,
+		Password:    CFG.Redis.Password,
+		DB:          CFG.Redis.DB,
+		RedisExpire: CFG.Redis.Expire,
+		Timeout:     CFG.Redis.Timeout,
+	})
 	/* Migrate */
 	db.AutoMigrate()
 	/* Seed */
@@ -42,7 +43,7 @@ func main() {
 	app := router.NewRouter(CFG, &router.Options{
 		Client: db,
 		CsJwt:  jwtCli,
-		//Rdc:    rdc,
+		Rdc:    rdc,
 	})
 
 	quit := make(chan os.Signal, 1)

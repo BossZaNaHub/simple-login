@@ -67,7 +67,7 @@ func NewRouter(cfg *env.Environment, opt *Options) *fiber.App {
 	})
 
 	repo := repositories.NewRepository(opt.Client)
-	service := services.NewService(repo, opt.CsJwt)
+	service := services.NewService(repo, opt.CsJwt, opt.Rdc)
 	handler := handlers.NewHandler(cfg, service)
 
 	api := app.Group("/api")
@@ -89,6 +89,7 @@ func NewRouter(cfg *env.Environment, opt *Options) *fiber.App {
 		}))
 		user.Get("/profile", handler.MemberProfile)
 		user.Post("/refresh_token", handler.RefreshToken)
+		user.Get("/logout", handler.MemberLogout)
 	}
 
 	return app

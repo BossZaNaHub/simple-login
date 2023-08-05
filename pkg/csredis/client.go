@@ -13,6 +13,7 @@ type Client interface {
 	Close()
 	Set(key string, value interface{}, expire ...time.Duration) error
 	Get(key string) (string, error)
+	Del(key string) (int64, error)
 }
 
 /*
@@ -94,6 +95,13 @@ func (c *defaultClient) Get(key string) (string, error) {
 	}
 
 	return val, nil
+}
+
+func (c *defaultClient) Del(key string) (int64, error) {
+	ctx, cancel := c.context()
+	defer cancel()
+
+	return c.rdc.Del(ctx, key).Result()
 }
 
 func (c *defaultClient) context() (context.Context, context.CancelFunc) {
