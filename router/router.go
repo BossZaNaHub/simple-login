@@ -8,6 +8,7 @@ import (
 	"github.com/kz-login/app/repositories"
 	"github.com/kz-login/app/services"
 	"github.com/kz-login/env"
+	"github.com/kz-login/pkg/csredis"
 	"github.com/kz-login/pkg/db"
 	customjwt "github.com/kz-login/pkg/jwt"
 	"log"
@@ -22,6 +23,7 @@ type validateErr struct {
 type Options struct {
 	Client db.Client
 	CsJwt  customjwt.Client
+	Rdc    csredis.Client
 }
 
 var validate = validator.New()
@@ -51,11 +53,13 @@ func NewRouter(cfg *env.Environment, opt *Options) *fiber.App {
 
 	app := fiber.New(fiber.Config{
 		AppName: cfg.App.Name,
-		//ErrorHandler: func(ctx *fiber.Ctx, err error) error {
-		//	return ctx.JSON(err)
-		//vErr := errors.NewDefaultError(err)
-		//return ctx.Status(fiber.StatusBadRequest).JSON(vErr)
-		//},
+		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
+			log.Println("is error handler: ", ctx, err)
+			return nil
+			//return ctx.JSON(err)
+			//vErr := errors.NewDefaultError(err)
+			//return ctx.Status(fiber.StatusBadRequest).JSON(vErr)
+		},
 	})
 
 	app.Get("/healthcheck", func(ctx *fiber.Ctx) error {
@@ -77,6 +81,10 @@ func NewRouter(cfg *env.Environment, opt *Options) *fiber.App {
 		user.Use(jwtware.New(jwtware.Config{
 			SigningKey: jwtware.SigningKey{
 				Key: []byte(cfg.JWT.JwtSecret),
+			},
+			ErrorHandler: func(ctx *fiber.Ctx, err error) error {
+				//log.Println("error handler: ", ctx, err)
+				return ctx.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"code": 401, "error": "Invalid or expired access token"})
 			},
 		}))
 		user.Get("/profile", handler.MemberProfile)

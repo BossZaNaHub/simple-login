@@ -5,4 +5,7 @@ var (
 	ErrClientPasswordMismatch  = NewError(ErrCodeClientPasswordMismatch, "password incorrect.")
 	ErrClientMemberNotVerified = NewError(ErrCodeClientMemberNotVerified, "password incorrect.")
 	ErrClientTokenInvalid      = NewError(ErrCodeClientTokenInvalid, "token invalid")
+	ErrClientUnauthorized      = NewError(ErrCodeClientUnauthorized, "unauthorized")
+
+	ErrBadParameter = NewError(ErrCodeBadParameter, "bad parameter")
 )

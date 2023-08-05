@@ -24,6 +24,7 @@ func (s *defaultService) Login(data *models.MemberLoginData) (*models.MemberData
 
 	/* JWT Encrypted */
 	ac, err := s.csJwt.CreateToken(jwt.ClaimTokenData{
+		UID:          user.Id,
 		Name:         user.Name,
 		MobileNumber: user.MobileNumber,
 	})

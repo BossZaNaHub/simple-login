@@ -1,3 +1,5 @@
 package models
 
-type ClientMemberRefreshTokenResp struct{}
+type ClientMemberRefreshTokenResp struct {
+	AccessToken string `json:"access_token"`
+}

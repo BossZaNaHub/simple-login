@@ -1,5 +1,7 @@
 package errors
 
+import "github.com/gofiber/fiber/v2"
+
 type defaultError struct {
 	code    ErrorCode
 	message string
@@ -19,6 +21,10 @@ func (d *defaultError) Error() string {
 
 func (d *defaultError) Code() ErrorCode {
 	return d.code
+}
+
+func (d *defaultError) FiberMap() fiber.Map {
+	return fiber.Map{"code": d.code, "message": d.message}
 }
 
 func NewError(code ErrorCode, message string) Error {

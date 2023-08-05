@@ -15,6 +15,7 @@ type defaultService struct {
 type Service interface {
 	Login(data *models.MemberLoginData) (*models.MemberData, *models.JwtToken, errors.Error)
 	Profile(userId int64) (*models.MemberData, errors.Error)
+	Refresh(rfToken string) (*models.JwtToken, errors.Error)
 }
 
 func NewService(rp repositories.Repository, csJwt customjwt.Client) Service {

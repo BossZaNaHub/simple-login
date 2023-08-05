@@ -22,6 +22,13 @@ type Environment struct {
 	Database struct {
 		DSN string `mapstructure:"DSN"`
 	} `mapstructure:"DATABASE"`
+	Redis struct {
+		Address  string `mapstructure:"ADDRESS"`
+		Password string `mapstructure:"PASSWORD"`
+		DB       int    `mapstructure:"DB"`
+		Expire   int    `mapstructure:"EXPIRE"`
+		Timeout  int    `mapstructure:"TIMEOUT"`
+	} `mapstructure:"REDIS"`
 }
 
 func ReadConfig(path string) (*Environment, error) {

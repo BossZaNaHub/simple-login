@@ -7,11 +7,12 @@ const (
 
 	ErrCodeInternalServer ErrorCode = 500
 
-	ErrCodeClientMemberNotFound    = 100
-	ErrCodeClientPasswordMismatch  = 101
-	ErrCodeClientMemberNotVerified = 102
+	ErrCodeClientMemberNotFound    ErrorCode = 100
+	ErrCodeClientPasswordMismatch  ErrorCode = 101
+	ErrCodeClientMemberNotVerified ErrorCode = 102
 
-	ErrCodeClientTokenInvalid = 200
+	ErrCodeClientTokenInvalid ErrorCode = 200
+	ErrCodeClientUnauthorized ErrorCode = 201
 
 	ErrCodeBadParameter ErrorCode = 400
 )

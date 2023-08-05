@@ -6,4 +6,5 @@ import (
 
 type Client interface {
 	CreateToken(data ClaimTokenData) (*ACToken, errors.Error)
+	RefreshToken(rfToken string) (*ACToken, errors.Error)
 }
