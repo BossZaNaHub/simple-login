@@ -18,13 +18,20 @@ JWT:
   REFRESH_EXPIRATION_TIME: 0
 DATABASE:
   DSN: "host=xxx user=xxx password=xxx dbname=xxx port=5432 sslmode=disable TimeZone=Asia/Bangkok"
+REDIS:
+  ADDRESS: "localhost:6379"
+  PASSWORD: "admin"
+  DB: 0
+  EXPIRE: 86400
+  TIMEOUT: 15
 ```
 
 ```
 go run bootstrap/main.go
 ```
 
-if you don't have sql/database. a simple way use it docker cli 
+if you don't have sql/database and redis. a simple way to use this service please run docker cli
+
 
 ## TESTING
 Test api, you can import postman collection as `postman` folder
